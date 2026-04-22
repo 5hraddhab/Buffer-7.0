@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OceanWatch Scheduler</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <datalist id="region-options">
+    <option value="Pacific Ocean"></option>
+    <option value="Indian Ocean"></option>
+    <option value="Atlantic Ocean"></option>
+    <option value="Arctic Sea"></option>
+    <option value="Arabian Sea"></option>
+    <option value="Red Sea"></option>
+    <option value="North Sea"></option>
+    <option value="Bering Sea"></option>
+    <option value="Antarctic Ocean"></option>
+    <option value="Bay of Bengal"></option>
+  </datalist>
+  <datalist id="task-id-options"></datalist>
+  <div class="page-shell">
+    <header class="hero-panel">
+      <div class="hero-copy">
+        <p class="eyebrow">Ocean Pollution Scheduling System</p>
+        <div class="brand-lockup" aria-label="OceanWatch">
+          <div class="brand-kicker">SATELLITE-BASED OCEAN POLLUTION MONITORING</div>
+          <h1 class="brand-wordmark">
+            <span class="brand-outline">OCEAN</span><span class="brand-fill">WATCH</span>
+          </h1>
+        </div>
+        <p class="hero-text">
+          Add satellites and monitoring tasks, run the C++ scheduler, and explore the results in a
+          simpler and easier way.
+        </p>
+        <div class="hero-actions">
+          <button id="load-demo" class="btn btn-secondary" type="button">Load Demo Data</button>
+          <button id="run-scheduler" class="btn btn-primary" type="button">Run C++ Scheduler</button>
+        </div>
+      </div>
+    </header>
+
+    <section id="status-banner" class="status-banner status-banner-neutral">
+      Add at least one satellite and one task, then run the scheduler.
+    </section>
+
+    <section class="stats-strip">
+      <article class="stat-card stat-cyan">
+        <span>Total Tasks</span>
+        <strong id="stat-total">0</strong>
+      </article>
+      <article class="stat-card stat-green">
+        <span>Scheduled</span>
+        <strong id="stat-scheduled">0</strong>
+      </article>
+      <article class="stat-card stat-red">
+        <span>Rejected</span>
+        <strong id="stat-rejected">0</strong>
+      </article>
+      <article class="stat-card stat-gold">
+        <span>Efficiency</span>
+        <strong id="stat-efficiency">0%</strong>
+      </article>
+    </section>
+
+    <section class="workspace-grid">
+      <div class="left-column">
+        <article class="panel mission-panel">
+          <div class="panel-header">
+            <div>
+            <p class="panel-kicker">Step 1</p>
+            <h2>Add Satellite</h2>
+          </div>
+            <p>Enter a satellite and the regions it can monitor.</p>
+          </div>
+          <form id="satellite-form" class="form-grid">
+            <label class="field">
+              <span>Satellite ID</span>
+              <input name="id" placeholder="SAT-001" required>
+            </label>
+            <label class="field">
+              <span>Name</span>
+              <input name="name" placeholder="Sentinel Alpha" required>
+            </label>
+            <label class="field">
+              <span>Max Tasks Per Orbit</span>
+              <input name="maxTasksPerOrbit" type="number" min="1" placeholder="4" required>
+            </label>
+            <label class="field field-wide">
+              <span>Coverable Regions</span>
+              <textarea name="coverableRegions" rows="4" placeholder="Pacific Ocean, Arctic Sea, Bering Sea" required></textarea>
+            </label>
+            <div class="field-wide form-actions">
+              <button id="satellite-submit-button" class="btn btn-primary" type="submit">Add Satellite</button>
+              <button id="satellite-cancel-button" class="btn btn-secondary" type="button" hidden>Cancel Edit</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="panel mission-panel">
+          <div class="panel-header">
+            <div>
+            <p class="panel-kicker">Step 2</p>
+            <h2>Add Monitoring Task</h2>
+          </div>
+            <p>Enter the task details you want the scheduler to process.</p>
+          </div>
+          <form id="task-form" class="form-grid">
+            <label class="field">
+              <span>Task ID</span>
+              <input name="id" placeholder="TSK-001" required>
+            </label>
+            <label class="field">
+              <span>Region</span>
+              <input name="region" list="region-options" placeholder="Pacific Ocean" required>
+            </label>
+            <label class="field">
+              <span>Pollution Type</span>
+              <select name="pollutionType">
+                <option>Plastic</option>
+                <option>Oil Spill</option>
+                <option>Industrial</option>
+                <option>Chemical</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Risk Level</span>
+              <select name="riskLevel">
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Urgency Score</span>
+              <input name="urgencyScore" type="number" min="1" max="100" placeholder="95" required>
+            </label>
+            <div class="field time-field">
+              <span>Observation Window</span>
+              <div class="inline-fields">
+                <input name="startTime" type="number" min="0" placeholder="Start" required>
+                <input name="endTime" type="number" min="1" placeholder="End" required>
+              </div>
+            </div>
+            <div class="field-wide form-actions">
+              <button id="task-submit-button" class="btn btn-primary" type="submit">Add Task</button>
+              <button id="task-cancel-button" class="btn btn-secondary" type="button" hidden>Cancel Edit</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Step 3</p>
+              <h2>Tasks You Added</h2>
+            </div>
+            <p id="task-count">0 tasks waiting</p>
+          </div>
+          <div class="table-shell">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Region</th>
+                  <th>Risk</th>
+                  <th>Urgency</th>
+                  <th>Window</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="task-table">
+                <tr><td colspan="6" class="empty-row">No tasks added.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+
+      <div class="right-column">
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Current Data</p>
+              <h2>Satellites You Added</h2>
+            </div>
+            <p id="satellite-count">0 satellites loaded</p>
+          </div>
+          <div id="satellite-list" class="stack-list empty">No satellites yet.</div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Scheduler Output</p>
+              <h2>Satellite Usage</h2>
+            </div>
+            <p>Shows how much work each satellite received.</p>
+          </div>
+          <div id="utilization-list" class="stack-list empty">No utilization data yet.</div>
+        </article>
+
+        <article class="panel feature-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">DSA Summary</p>
+              <h2>How The Backend Works</h2>
+            </div>
+            <p>Complexity and structures used by the C++ backend.</p>
+          </div>
+          <div id="complexity-panel" class="feature-list empty">Run the scheduler to load complexity notes.</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="results-grid">
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Queue View</p>
+            <h2>Task Order</h2>
+          </div>
+          <p>Order decided by the backend priority queue.</p>
+        </div>
+        <div id="priority-queue-list" class="stack-list empty">Run the scheduler to inspect queue order.</div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Graph View</p>
+            <h2>Coverage Connections</h2>
+          </div>
+          <p>Shows which satellite can cover which region.</p>
+        </div>
+        <div id="coverage-graph-canvas" class="graph-canvas empty">Run the scheduler to draw the coverage graph.</div>
+        <div class="adjacency-grid">
+          <div>
+            <h3 class="subheading">Satellite to Regions</h3>
+            <div id="satellite-region-list" class="stack-list empty">No graph data yet.</div>
+          </div>
+          <div>
+            <h3 class="subheading">Region to Satellites</h3>
+            <div id="region-satellite-list" class="stack-list empty">No graph data yet.</div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="results-grid">
+      <article class="panel result-panel accepted-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Results</p>
+            <h2>Accepted Tasks</h2>
+          </div>
+          <p>Tasks successfully assigned by the backend.</p>
+        </div>
+        <div class="table-shell">
+          <table>
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Region</th>
+                <th>Satellite</th>
+                <th>Priority</th>
+                <th>Window</th>
+              </tr>
+            </thead>
+            <tbody id="accepted-table">
+              <tr><td colspan="5" class="empty-row">Run the scheduler to see results.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="panel result-panel rejected-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Results</p>
+            <h2>Rejected Tasks</h2>
+          </div>
+          <p>Tasks the backend could not assign, with reasons.</p>
+        </div>
+        <div class="table-shell">
+          <table>
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Region</th>
+                <th>Risk</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody id="rejected-table">
+              <tr><td colspan="4" class="empty-row">No rejected tasks yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section class="results-grid">
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Timeline</p>
+            <h2>Accepted Schedule Timeline</h2>
+          </div>
+          <p>Time windows for accepted tasks.</p>
+        </div>
+        <div id="timeline-list" class="timeline-list empty">Run the scheduler to view accepted windows.</div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Analytics</p>
+            <h2>Risk Distribution</h2>
+          </div>
+          <p>Task count by risk level.</p>
+        </div>
+        <div id="risk-distribution-list" class="stack-list empty">No risk data yet.</div>
+      </article>
+    </section>
+
+    <section class="results-grid">
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Search</p>
+            <h2>Find Task By ID</h2>
+          </div>
+          <p>Search results returned by the backend.</p>
+        </div>
+        <form id="task-search-form" class="search-form">
+          <input id="task-search-input" list="task-id-options" placeholder="Enter task ID, for example TSK-001">
+          <button class="btn btn-secondary" type="submit">Find Task</button>
+        </form>
+        <div id="task-search-result" class="stack-list empty">No task search yet.</div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Search</p>
+            <h2>Find Tasks In Time Interval</h2>
+          </div>
+          <p>Shows accepted tasks overlapping a selected time range.</p>
+        </div>
+        <form id="interval-search-form" class="search-form two-col">
+          <input id="interval-start-input" type="number" min="0" placeholder="Start">
+          <input id="interval-end-input" type="number" min="1" placeholder="End">
+          <button class="btn btn-secondary search-wide" type="submit">Find Interval</button>
+        </form>
+        <div id="interval-search-result" class="stack-list empty">No interval search yet.</div>
+      </article>
+    </section>
+
+    <section class="results-grid">
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Search</p>
+            <h2>Find Tasks By Region</h2>
+          </div>
+          <p>Backend region lookup</p>
+        </div>
+        <form id="region-search-form" class="search-form">
+          <input id="region-search-input" list="region-options" placeholder="Enter region like Pacific Ocean">
+          <button class="btn btn-secondary" type="submit">Find Region</button>
+        </form>
+        <div id="region-search-result" class="stack-list empty">Search a region to see matching tasks here.</div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Search</p>
+            <h2>Find Tasks By Risk</h2>
+          </div>
+          <p>Backend grouped lookup</p>
+        </div>
+        <form id="risk-search-form" class="search-form">
+          <select id="risk-search-input">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+          <button class="btn btn-secondary" type="submit">Find Risk</button>
+        </form>
+        <div id="risk-search-result" class="stack-list empty">Choose a risk level to see matching tasks here.</div>
+      </article>
+    </section>
+
+    <section class="results-grid">
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">BST View</p>
+            <h2>Per-Satellite Sorted Schedule</h2>
+          </div>
+          <p>Accepted tasks in time order</p>
+        </div>
+        <div id="sorted-schedules-list" class="stack-list empty">Run the scheduler to inspect per-satellite sorted schedules.</div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Coverage Report</p>
+            <h2>Uncovered Regions</h2>
+          </div>
+          <p>Tasks without satellite coverage</p>
+        </div>
+        <div id="uncovered-regions-list" class="stack-list empty">Run the scheduler to inspect uncovered regions.</div>
+      </article>
+    </section>
+
+    <section class="results-grid">
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Priority Queue</p>
+            <h2>Top Pending Tasks</h2>
+          </div>
+          <p>Highest-priority rejected tasks</p>
+        </div>
+        <div id="top-pending-list" class="stack-list empty">Run the scheduler to inspect top pending tasks.</div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Load Report</p>
+            <h2>Satellite Ranking</h2>
+          </div>
+          <p>Satellites ordered by assigned load</p>
+        </div>
+        <div id="satellite-ranking-list" class="stack-list empty">Run the scheduler to inspect satellite ranking.</div>
+      </article>
+    </section>
+
+    <section class="results-grid">
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Coverage Report</p>
+            <h2>Region Coverage Details</h2>
+          </div>
+          <p>Task counts and covering satellites</p>
+        </div>
+        <div id="region-report-list" class="stack-list empty">Run the scheduler to inspect region coverage report.</div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Waiting List</p>
+            <h2>Rejected Task Queue</h2>
+          </div>
+          <p>Rejected tasks returned by backend</p>
+        </div>
+        <div id="waiting-list" class="stack-list empty">Run the scheduler to inspect the waiting list.</div>
+      </article>
+    </section>
+
+    <section class="tips-grid">
+      <article class="panel compact-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Helpful Check</p>
+            <h2>Region Match</h2>
+          </div>
+          <p>Quick validation before scheduling</p>
+        </div>
+        <div id="coverage-warning" class="empty">No tasks to validate yet.</div>
+      </article>
+
+      <article class="panel compact-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Example Input</p>
+            <h2>Easy Test Data</h2>
+          </div>
+          <p>Use matching regions for accepted tasks</p>
+        </div>
+        <div class="mini-meta">Example: satellite covers <strong>Pacific Ocean</strong> and task region is also <strong>Pacific Ocean</strong>.</div>
+      </article>
+    </section>
+
+    <footer class="footer-bar">
+      <div class="footer-chip">C++ Backend</div>
+      <div class="footer-chip">Node Connector</div>
+      <div class="footer-chip">Simple UI</div>
+      <p id="status" class="status">Ready.</p>
+    </footer>
+  </div>
+
+  <script src="/script.js"></script>
+</body>
+</html>
