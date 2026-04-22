@@ -1,18 +1,11 @@
 # Satellite Task Scheduling System  
 ### DSA-Driven Optimization Engine for Ocean Pollution Monitoring  
-## Team 60 | Buffer 7.0 Hackathon
+## Team 60 | Buffer 7.0 
 
 ---
 ---
 
-## Project Demonstration
 
-The working prototype and system behavior can be observed in the demonstration video below:
-
- **Demo Video:**  
-[https://drive.google.com/file/d/1-K6qMgYC6WUjQnyltsd3XeW3Ad-MKUei/view?usp=drive_link
-](url)
----
 
 ## Overview
 
@@ -21,7 +14,15 @@ This system implements a **high-performance scheduling engine** that optimizes s
 Unlike traditional applications, this system is **algorithm-centric**, where all decisions are computed using structured data-driven logic.
 
 ---
+---
 
+## Demonstration Video
+
+A complete walkthrough of the system, including scheduling execution, constraint validation, and visualization outputs:
+
+[Watch Demo Video](https://drive.google.com/file/d/1-K6qMgYC6WUjQnyltsd3XeW3Ad-MKUei/view)
+
+---
 ## PROBLEM STATEMENT
 
 ### Formal Definition  
