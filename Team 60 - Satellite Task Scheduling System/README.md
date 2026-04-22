@@ -200,7 +200,7 @@ The strength lies not in individual structures, but in their **coordinated inter
 
 ---
 
-## 🔮 Future Scope  
+##  Future Scope  
 
 - Integration of **self-balancing trees (AVL / Red-Black)**  
 - Adaptive priority tuning using real-time inputs  
