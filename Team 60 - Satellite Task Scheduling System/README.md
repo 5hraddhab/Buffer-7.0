@@ -3,6 +3,16 @@
 ## Team 60 | Buffer 7.0 Hackathon
 
 ---
+---
+
+## Project Demonstration
+
+The working prototype and system behavior can be observed in the demonstration video below:
+
+ **Demo Video:**  
+[https://drive.google.com/file/d/1-K6qMgYC6WUjQnyltsd3XeW3Ad-MKUei/view?usp=drive_link
+](url)
+---
 
 ## Overview
 
