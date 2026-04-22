@@ -272,14 +272,6 @@ pie title Rejection Breakdown
 | SAT-03    | 8     | 67%         |
 | SAT-04    | 6     | 50%         |
 
-```mermaid
-bar
-    title Satellite Utilization
-    "SAT-01" : 100
-    "SAT-02" : 83
-    "SAT-03" : 67
-    "SAT-04" : 50
-```
 
 ---
 
