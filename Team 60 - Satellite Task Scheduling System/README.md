@@ -34,13 +34,54 @@ The scheduling problem can be formally described as:
 
 ##  System Architecture  
 
+<div align="center">
+
 ```
-Client Interface (Visualization Layer)
-            ↓
-Node.js API Gateway (Communication Layer)
-            ↓
-C++ Scheduling Engine (DSA Core)
+┌──────────────────────────────┐
+│   CLIENT INTERFACE LAYER     │
+│  (HTML / CSS / JavaScript)   │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│     API GATEWAY LAYER        │
+│        (Node.js Server)      │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│   CORE COMPUTATION ENGINE    │
+│   (C++ DSA Scheduling Core)  │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│     DATA STRUCTURE LAYER     │
+│ Heap | Graph | BST | Maps    │
+└──────────────────────────────┘
 ```
+
+</div>
+
+---
+
+### Architectural Layers
+
+| Layer | Responsibility |
+|------|---------------|
+| Client Layer | Input handling and visualization |
+| API Layer | Request routing and communication |
+| Core Engine | Scheduling logic and optimization |
+| Data Layer | DSA structures driving computation |
+
+---
+
+### Design Characteristics
+
+- Strict separation of concerns  
+- Backend-driven decision pipeline  
+- Stateless communication layer  
+- Deterministic scheduling behavior 
 
 ### Design Principle  
 The architecture strictly separates **computation from presentation**:
@@ -71,6 +112,33 @@ The scheduler is not heuristic—it is **systematically structured** using multi
 ```
 Task Set → Priority Queue → Feasibility Graph → Constraint Filtering → Greedy Allocation → BST Insertion
 ```
+##  Execution Flow  
+
+<div align="center">
+
+```
+[ Task Input ]
+       │
+       ▼
+[ Priority Queue ]
+       │
+       ▼
+[ Coverage Graph Filter ]
+       │
+       ▼
+[ Constraint Validation ]
+       │
+       ▼
+[ Greedy Allocation ]
+       │
+       ▼
+[ BST Scheduling ]
+       │
+       ▼
+[ Final Assignment Output ]
+```
+
+</div>
 
 ### Step-wise Execution
 
