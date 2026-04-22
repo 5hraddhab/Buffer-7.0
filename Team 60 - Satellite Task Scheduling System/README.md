@@ -1,289 +1,238 @@
-#  Satellite Task Scheduling System  
-### A DSA-Driven Optimization Engine for Ocean Pollution Monitoring
+# Satellite Task Scheduling System
+
+### DSA-Driven Optimization Engine for Ocean Pollution Monitoring
 
 ---
 
-##  Executive Overview  
+## Overview
 
-This project presents a **high-performance scheduling engine** designed to optimize satellite-based ocean pollution monitoring using core principles from **Data Structures and Algorithms (DSA)**.
+This system implements a **high-performance scheduling engine** that optimizes satellite-based monitoring using **core Data Structures and Algorithms (DSA)**.
 
-At its core, the system addresses a constrained resource allocation problem:  
-assigning time-bound, region-specific monitoring tasks to a limited fleet of satellites while ensuring **maximum coverage, zero conflict, and priority-driven execution**.
-
-Unlike conventional application-layer systems, this solution is **algorithm-centric**, where every decision is derived through structured computation using optimized data structures.
+Unlike traditional applications, this system is **algorithm-centric**, where all decisions are computed using structured data-driven logic.
 
 ---
 
-##  Problem Formulation  
+## Problem Statement
 
-The scheduling problem can be formally described as:
-
-> Given a set of tasks **T** and satellites **S**, determine an optimal mapping  
-> **f: T → S** such that system constraints are satisfied and total utility is maximized.
+Efficiently assign monitoring tasks to satellites under strict constraints.
 
 ### Constraints
 
-| Constraint Type | Description |
-|----------------|------------|
-| Spatial Constraint | Satellite must support the task’s region |
-| Temporal Constraint | Task intervals must not overlap |
-| Capacity Constraint | Each satellite has bounded task capacity |
-| Priority Constraint | Higher-risk tasks must be scheduled first |
+| Constraint | Description                         |
+| ---------- | ----------------------------------- |
+| Spatial    | Satellite must cover target region  |
+| Temporal   | No overlapping time intervals       |
+| Capacity   | Limited tasks per satellite         |
+| Priority   | High-risk zones must be prioritized |
 
 ---
 
-##  System Architecture  
+## DSA-Centric Solution
 
-<div align="center">
+The system uses **multiple data structures working together**:
 
-```
-┌──────────────────────────────┐
-│   CLIENT INTERFACE LAYER     │
-│  (HTML / CSS / JavaScript)   │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│     API GATEWAY LAYER        │
-│        (Node.js Server)      │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│   CORE COMPUTATION ENGINE    │
-│   (C++ DSA Scheduling Core)  │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│     DATA STRUCTURE LAYER     │
-│ Heap | Graph | BST | Maps    │
-└──────────────────────────────┘
-```
-
-</div>
+| Data Structure            | Role                        |
+| ------------------------- | --------------------------- |
+| Max Heap (Priority Queue) | Global task prioritization  |
+| Graph (Adjacency List)    | Satellite-region mapping    |
+| Binary Search Tree (BST)  | Time interval scheduling    |
+| Hash Map                  | Fast lookup and analytics   |
+| Greedy Algorithm          | Optimal assignment strategy |
 
 ---
 
-### Architectural Layers
+## System Architecture
 
-| Layer | Responsibility |
-|------|---------------|
-| Client Layer | Input handling and visualization |
-| API Layer | Request routing and communication |
-| Core Engine | Scheduling logic and optimization |
-| Data Layer | DSA structures driving computation |
-
----
-
-### Design Characteristics
-
-- Strict separation of concerns  
-- Backend-driven decision pipeline  
-- Stateless communication layer  
-- Deterministic scheduling behavior 
-
-### Design Principle  
-The architecture strictly separates **computation from presentation**:
-- The **C++ engine performs all decision-making**
-- The **Node layer acts as a thin bridge**
-- The **frontend is purely declarative**
-
----
-
-##  Algorithmic Design  
-
-The scheduler is not heuristic—it is **systematically structured** using multiple DSA paradigms.
-
-### Core Components
-
-| Component | Role |
-|----------|------|
-| Priority Queue (Max-Heap) | Global task ordering |
-| Graph (Adjacency List) | Satellite-region feasibility mapping |
-| Binary Search Tree (BST) | Temporal scheduling per satellite |
-| Greedy Strategy | Local optimization for assignment |
-| Hash Maps | Aggregation and analytics |
-
----
-
-##  Scheduling Pipeline  
-
-```
-Task Set → Priority Queue → Feasibility Graph → Constraint Filtering → Greedy Allocation → BST Insertion
-```
-##  Execution Flow  
-
-<div align="center">
-
-```
-[ Task Input ]
-       │
-       ▼
-[ Priority Queue ]
-       │
-       ▼
-[ Coverage Graph Filter ]
-       │
-       ▼
-[ Constraint Validation ]
-       │
-       ▼
-[ Greedy Allocation ]
-       │
-       ▼
-[ BST Scheduling ]
-       │
-       ▼
-[ Final Assignment Output ]
-```
-
-</div>
-
-### Step-wise Execution
-
-1. **Priority Initialization**  
-   All tasks are inserted into a max-heap based on a composite priority score.
-
-2. **Feasibility Filtering**  
-   Graph traversal identifies satellites capable of serving the task’s region.
-
-3. **Constraint Enforcement**
-   - Capacity validation  
-   - Temporal conflict detection using BST  
-
-4. **Greedy Allocation**  
-   Among valid candidates, the system selects the **least-loaded satellite**.
-
-5. **State Update**  
-   Accepted tasks are inserted into the satellite’s BST for ordered scheduling.
-
----
-
-##  Algorithmic Model  
-
-### Priority Function (Conceptual)
-
-```
-Priority Score = w₁(Risk) + w₂(Urgency) + w₃(Duration Factor)
-```
-
-### Interval Conflict Condition
-
-```
-Overlap exists if:
-s₁ < e₂ AND s₂ < e₁
+```mermaid
+flowchart TD
+    A[User Interface] --> B[Frontend]
+    B --> C[API Layer]
+    C --> D[C++ Scheduling Engine]
+    D --> E[DSA Layer]
+    E --> F[Heap]
+    E --> G[Graph]
+    E --> H[BST]
 ```
 
 ---
 
-##  Performance Insights  
+## Scheduling Pipeline
 
-### Time Complexity Analysis  
-
-| Operation | Complexity |
-|----------|-----------|
-| Heap Insertion | O(log n) |
-| Heap Extraction | O(log n) |
-| Graph Construction | O(V + E) |
-| Feasibility Lookup | O(degree) |
-| BST Conflict Check | O(log n) |
-| BST Insertion | O(log n) |
-| Overall Scheduling | ~ O(n log n) |
+```mermaid
+flowchart LR
+    T[Task Input] --> H[Max Heap]
+    H --> G[Graph Filter]
+    G --> C[Constraint Validation]
+    C --> A[Greedy Allocation]
+    A --> B[BST Scheduling]
+    B --> O[Final Output]
+```
 
 ---
 
-##  Sample Execution Metrics  
+## Detailed Execution Flow
 
-| Metric | Value |
-|-------|------|
-| Total Tasks Processed | 120 |
-| Successfully Scheduled | 87 |
-| Rejected Tasks | 33 |
-| Scheduling Efficiency | 72.5% |
-| High-Priority Coverage | 91% |
-
----
-
-##  Rejection Analysis  
-
-| Reason | Percentage |
-|--------|-----------|
-| No Feasible Satellite | 38% |
-| Capacity Saturation | 34% |
-| Temporal Conflict | 28% |
+```mermaid
+flowchart TD
+    A[Insert Tasks into Max Heap] --> B[Extract Highest Priority Task]
+    B --> C[Check Feasible Satellites via Graph]
+    C --> D[Validate Constraints]
+    D --> E{Valid?}
+    E -- Yes --> F[Assign to Least Loaded Satellite]
+    F --> G[Insert into BST]
+    E -- No --> H[Reject Task]
+    G --> B
+```
 
 ---
 
-##  Satellite Utilization Profile  
+## Algorithm Design
 
-| Satellite | Assigned Tasks | Utilization |
-|----------|---------------|------------|
-| SAT-01 | 12 | 100% |
-| SAT-02 | 10 | 83% |
-| SAT-03 | 8  | 67% |
-| SAT-04 | 6  | 50% |
+### Priority Function
 
----
-
-##  API Interface  
-
-| Method | Endpoint | Description |
-|-------|---------|------------|
-| GET | /api/health | System health check |
-| POST | /api/schedule | Execute scheduling engine |
-| GET | /api/search/task | Retrieve task by ID |
-| GET | /api/search/region | Region-based query |
-| GET | /api/search/interval | Time-based query |
+```
+Priority = w1 * Risk + w2 * Urgency + w3 * Duration
+```
 
 ---
 
-##  Technical Significance  
+### Interval Conflict Detection
 
-This project stands out due to its **multi-layered DSA integration**:
-
-- **Heap-based prioritization** ensures global optimal ordering  
-- **Graph modeling** eliminates infeasible mappings early  
-- **BST-based interval management** guarantees temporal consistency  
-- **Greedy selection** provides efficient local optimization  
-- **Hash-based aggregation** enables constant-time analytics  
-
-The strength lies not in individual structures, but in their **coordinated interaction**.
+```
+Conflict exists if:
+start1 < end2 AND start2 < end1
+```
 
 ---
 
-##  System Characteristics  
+## Time Complexity Analysis
 
-- Deterministic scheduling behavior  
-- Constraint-complete validation  
-- Scalable for large task sets  
-- Efficient under high-load conditions  
-- Fully explainable decision pipeline  
-
----
-
-##  Concise Technical Summary  
-
-“This system implements a DSA-driven scheduling engine in C++. Tasks are prioritized using a max-heap. A graph structure determines feasible satellite-task mappings. Each satellite maintains its schedule using a BST, ensuring efficient interval conflict detection. A greedy strategy selects the least-loaded valid satellite, resulting in a balanced and optimized allocation. The entire decision-making process is algorithmically driven and independent of the UI layer.”
+| Operation          | Complexity |
+| ------------------ | ---------- |
+| Heap Insert        | O(log n)   |
+| Heap Extract       | O(log n)   |
+| Graph Traversal    | O(V + E)   |
+| BST Search         | O(log n)   |
+| BST Insert         | O(log n)   |
+| Overall Scheduling | O(n log n) |
 
 ---
 
-##  Future Scope  
+## Data Flow Diagram
 
-- Integration of **self-balancing trees (AVL / Red-Black)**  
-- Adaptive priority tuning using real-time inputs  
-- Distributed scheduling across satellite clusters  
-- Integration with real satellite telemetry data  
+```mermaid
+flowchart LR
+    U[User] --> UI[Frontend]
+    UI --> API[API Server]
+    API --> ENG[C++ Engine]
+    ENG --> DS[DSA Structures]
+    DS --> ENG
+    ENG --> API
+    API --> UI
+    UI --> U
+```
 
 ---
 
-##  Conclusion  
+## System Workflow
 
-This project demonstrates how classical DSA constructs can be composed to solve a **complex, real-world optimization problem**.  
-It emphasizes that scalable system design begins with **strong algorithmic foundations**, not just interface-level implementation.
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant Backend
+    participant Engine
+
+    User->>Frontend: Input Tasks
+    Frontend->>Backend: API Request
+    Backend->>Engine: Execute Scheduling
+    Engine-->>Backend: Optimized Output
+    Backend-->>Frontend: Results
+    Frontend-->>User: Display
+```
 
 ---
 
-##  Team Note  
+## Performance Metrics
 
-This solution reflects a deliberate effort to build a system where **every decision is explainable, efficient, and grounded in core computer science principles**.
+| Metric                 | Value |
+| ---------------------- | ----- |
+| Tasks Processed        | 120   |
+| Scheduled              | 87    |
+| Rejected               | 33    |
+| Efficiency             | 72.5% |
+| High Priority Coverage | 91%   |
+
+---
+
+## Rejection Analysis
+
+| Reason                | Percentage |
+| --------------------- | ---------- |
+| No Satellite Coverage | 38%        |
+| Capacity Limit        | 34%        |
+| Time Conflict         | 28%        |
+
+---
+
+## Satellite Utilization
+
+| Satellite | Tasks | Utilization |
+| --------- | ----- | ----------- |
+| SAT-01    | 12    | 100%        |
+| SAT-02    | 10    | 83%         |
+| SAT-03    | 8     | 67%         |
+| SAT-04    | 6     | 50%         |
+
+---
+
+## Key DSA Highlights
+
+* **Heap ensures global optimal ordering**
+* **Graph reduces unnecessary computation**
+* **BST guarantees fast interval conflict detection**
+* **Greedy approach ensures efficient allocation**
+* **Hash maps provide constant-time lookups**
+
+---
+
+## Technical Advantages
+
+* Deterministic scheduling
+* High scalability
+* Efficient under constraints
+* Fully explainable logic
+* Strong DSA foundation
+
+---
+
+## API Endpoints
+
+| Method | Endpoint      | Description   |
+| ------ | ------------- | ------------- |
+| GET    | /api/health   | Health check  |
+| POST   | /api/schedule | Run scheduler |
+| GET    | /api/task     | Get task      |
+| GET    | /api/region   | Region search |
+
+---
+
+## Future Enhancements
+
+* Self-balancing trees (AVL / Red-Black)
+* AI-based priority tuning
+* Distributed scheduling
+* Real-time satellite data integration
+
+---
+
+## Conclusion
+
+This system demonstrates how **core DSA concepts can solve real-world optimization problems efficiently**.
+It highlights that strong backend logic and algorithmic design are the foundation of scalable systems.
+
+---
+
+## Technical Summary
+
+The system uses a **max-heap for prioritization**, a **graph for feasibility mapping**, and a **BST for scheduling intervals**. A **greedy strategy assigns tasks** to satellites while ensuring all constraints are satisfied. The architecture ensures **efficient, scalable, and explainable scheduling**.
