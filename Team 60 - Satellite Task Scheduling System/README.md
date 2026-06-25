@@ -15,6 +15,8 @@ Unlike traditional applications, this system is **algorithm-centric**, where all
 
 ---
 ---
+### Application
+https://dsa-driven-satellite-task-scheduling.onrender.com
 
 ## Demonstration Video
 
@@ -92,6 +94,41 @@ Naïve solutions are inefficient → hence a **DSA-driven pipeline** is used.
 | Binary Search Tree (BST)  | Time interval scheduling    |
 | Hash Map                  | Fast lookup and analytics   |
 | Greedy Algorithm          | Optimal assignment strategy |
+
+---
+# Technology Stack
+
+## Frontend
+
+- HTML5
+- CSS3
+- JavaScript
+
+## Backend
+
+- Node.js
+- Express.js
+
+## Scheduling Engine
+
+- C++
+- STL
+- Priority Queue
+- Graph
+- Binary Search Tree
+
+## APIs
+
+- REST API
+
+## Version Control
+
+- Git
+- GitHub
+
+## Deployment
+
+- Render
 
 ---
 
@@ -286,13 +323,16 @@ pie title Rejection Breakdown
 
 ---
 
-## Key DSA Highlights
+# Key Features
 
-- Heap ensures global optimal ordering  
-- Graph reduces unnecessary computation  
-- BST guarantees fast interval conflict detection  
-- Greedy approach ensures efficient allocation  
-- Hash maps provide constant-time lookups  
+- DSA-first architecture
+- Priority-based scheduling
+- Conflict-free task allocation
+- Region-aware satellite assignment
+- Capacity management
+- Explainable decision pipeline
+- Efficient complexity analysis
+- Scalable scheduling framework
 
 ---
 
@@ -317,12 +357,15 @@ pie title Rejection Breakdown
 
 ---
 
-## Future Enhancements
+# Future Enhancements
 
-- Self-balancing trees (AVL / Red-Black)  
-- AI-based priority tuning  
-- Distributed scheduling  
-- Real-time satellite data integration  
+- AVL Trees
+- Red-Black Trees
+- Dynamic Priority Adjustment
+- Distributed Scheduling
+- Real-Time Satellite Telemetry
+- Machine Learning Assisted Prioritization
+- Large Scale Cluster Scheduling 
 
 ---
 
